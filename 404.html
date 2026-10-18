@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面不存在 · 麓原交通协会</title>
+  <meta name="robots" content="noindex">
+
+  <!-- 绝对路径，防止在深层目录下访问 404 时样式丢失 -->
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/404.css">
+</head>
+<body class="error-page">
+
+  <!-- 导航占位（common.js 注入） -->
+  <div id="site-header"></div>
+
+  <main class="error-main">
+    <div class="error-inner">
+
+      <div class="error-code" aria-hidden="true">404</div>
+
+      <h1 class="error-title">页面不存在</h1>
+      <p class="error-desc">
+        您访问的页面有可能已被删除或者地址输入有误；但更可能的是作者根本没做。
+      </p>
+
+      <div class="error-actions">
+        <a href="/" class="error-btn">返回首页</a>
+        <a href="/#index-download" class="error-btn error-btn--secondary">下载地图</a>
+      </div>
+
+      <nav class="error-links" aria-label="常用入口">
+        <a href="/products/product.html?project=luyuan">地图作品</a>
+        <a href="/catalog/lines.html">线路查询</a>
+        <a href="/catalog/company.html">运营公司</a>
+        <a href="/docs/help.html">帮助中心</a>
+      </nav>
+
+    </div>
+  </main>
+
+  <!-- 页脚占位（common.js 注入） -->
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/common.js"></script>
+</body>
+</html>

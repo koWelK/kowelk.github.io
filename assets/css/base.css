@@ -1,0 +1,296 @@
+/* ============================================================
+   base.css — 全局基础样式与公共组件（融合编辑风与现代风）
+   ============================================================ */
+
+:root {
+  /* --- 基础色板（保留原黑灰，增加现代风主色） --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f6f8fa;      /* 偏灰的背景，用于区分区块 */
+  --color-text: #1e2a36;
+  --color-text-strong: #0f1a26;  /* 标题用极深色 */
+  --color-text-weak: #6b6b6b;
+  --color-line: #eef2f6;         /* 边框更柔和一些 */
+  
+  /* --- 强调色（现代风蓝） --- */
+  --color-primary: #4a7cf7;
+  --color-primary-dark: #3a66d6;
+  --color-primary-soft: #eef4ff;
+  --color-accent: #1a1a1a;       /* 保留原编辑风的纯黑强调 */
+
+  /* --- 圆角（方案 B 的核心特征） --- */
+  --radius: 0;                   /* 全局默认还是无圆角，保留编辑风的克制 */
+  --radius-pill: 100px;          /* 胶囊圆角 */
+  --radius-lg: 16px;             /* 卡片大圆角 */
+  --radius-md: 8px;              /* 按钮/输入框中圆角 */
+  --radius-sm: 4px;
+
+  /* --- 间距系统（完全保留原版） --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+
+  /* --- 字体与容器宽度 --- */
+  --font-sans: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --max-width: 1080px;
+}
+
+/* ============================================================
+   基础重置与排版
+   ============================================================ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 全局链接：保留编辑风的下划线，正文内阅读更清晰 */
+a { 
+  color: inherit; 
+  text-decoration: none; 
+  border-bottom: 1px solid var(--color-line); 
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+a:hover { 
+  border-bottom-color: var(--color-text); 
+}
+
+img { display: block; max-width: 100%; }
+
+/* 排版容器 */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+.section { padding: var(--space-5) 0; border-top: 1px solid var(--color-line); }
+.section__title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-weak);
+  margin: 0 0 var(--space-3);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Header 导航栏（悬浮胶囊风）
+   ============================================================ */
+.site-nav-wrapper {
+  position: fixed; /* 改为 fixed */
+  top: 24px;       /* 距离屏幕顶部 16px */
+  left: 0;
+  right: 0;
+  padding: 0 24px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.site-nav {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 24px;
+  pointer-events: auto; /* 恢复内部点击 */
+  transition: box-shadow 0.3s ease;
+}
+.site-nav:hover { box-shadow: 0 6px 32px rgba(0, 0, 0, 0.16); }
+
+/* Logo */
+.nav-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-strong);
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: baseline;
+  border-bottom: none; /* 重置全局下划线 */
+}
+.nav-logo:hover { border-bottom: none; color: var(--color-primary); }
+.nav-logo-dot {
+  color: var(--color-primary);
+  font-size: 24px;
+  line-height: 1;
+  margin-right: 2px;
+}
+
+/* 导航链接 */
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 14px;
+  color: var(--color-text-soft);
+  border-bottom: none; /* 重置全局下划线 */
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-links a:hover {
+  color: var(--color-primary);
+  border-bottom: none;
+}
+
+/* 右侧操作区 */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 主按钮 */
+.nav-btn {
+  background: var(--color-primary);
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: none; /* 重置全局下划线 */
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.1s;
+}
+.nav-btn:hover { 
+  background: var(--color-primary-dark); 
+  border-bottom: none;
+}
+.nav-btn:active { transform: scale(0.96); }
+
+/* 移动端汉堡图标 */
+.nav-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.nav-menu-btn span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav-menu-btn.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-menu-btn.is-open span:nth-child(2) { opacity: 0; }
+.nav-menu-btn.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ============================================================
+   Footer 页脚（居中极简风）
+   ============================================================ */
+.site-footer {
+  background: #ffffff;
+  border-top: 1px solid var(--color-line);
+  padding: 80px 24px 40px;
+  text-align: center;
+}
+.site-footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-strong);
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+  border-bottom: none;
+}
+.footer-logo:hover { border-bottom: none; }
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-size: 14px;
+  color: var(--color-text-soft);
+  border-bottom: none; /* 重置全局下划线 */
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-links a:hover { 
+  color: var(--color-primary); 
+  border-bottom: none;
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: var(--color-text-weak);
+}
+
+/* ============================================================
+   响应式适配 (<=768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .site-nav-wrapper { padding: 0 12px; top: 12px; }
+  .site-nav { height: 56px; padding: 0 12px 0 16px; }
+  .nav-logo { font-size: 16px; }
+  
+  /* 移动端下拉菜单 */
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    padding: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-links.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-links a {
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .nav-links a:hover {
+    background: var(--color-bg-soft);
+    color: var(--color-primary);
+  }
+
+  .nav-menu-btn { display: flex; }
+  .nav-btn { padding: 6px 16px; font-size: 13px; }
+  
+  .site-footer { padding: 60px 24px 32px; }
+  .footer-links { gap: 24px; flex-direction: column; margin-bottom: 32px; }
+}

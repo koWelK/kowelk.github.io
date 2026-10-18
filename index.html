@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>麓原 · 麓原交通协会</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/index.css">
+</head>
+<body class="home-page">
+
+  <!-- 加载遮罩 -->
+  <div id="home-loader" class="home-loader" aria-hidden="true">
+    <div class="home-loader__inner">
+      <div class="home-spinner"></div>
+      <p class="home-loader__text">加载中...</p>
+      <div class="home-progress">
+        <div class="home-progress__fill" id="home-progress-fill"></div>
+      </div>
+      <p class="home-loader__label" id="home-progress-label">0%</p>
+    </div>
+  </div>
+
+  <!-- 导航（由 common.js 注入） -->
+  <div id="site-header"></div>
+
+  <main id="home-main">
+    <section class="home-cover" id="home-cover" aria-label="作品封面"></section>
+    <div id="home-features"></div>
+    <section class="home-download" id="home-download" aria-label="下载"></section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/index.js"></script>
+</body>
+</html>

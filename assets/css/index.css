@@ -1,0 +1,472 @@
+/* ============================================================
+   index.css — 首页（麓原作品介绍）
+   风格基准：productN.css（蓝 #4a7cf7 / 大留白 / 圆角 / 上浮动画）
+   作用域：所有选择器以 .home- 开头，变量挂在 .home-page 上
+   ============================================================ */
+
+/* ---------- 1. 作用域变量 ---------- */
+.home-page {
+  --home-blue: #4a7cf7;
+  --home-blue-dark: #3a66d6;
+  --home-blue-soft: #eef4ff;
+  --home-text: #1e2a36;
+  --home-text-strong: #0f1a26;
+  --home-text-soft: #4a5c6e;
+  --home-text-mute: #8a9cb0;
+  --home-line: #eef2f6;
+  --home-line-soft: #f5f7fa;
+  --home-bg: #f6f8fa;
+  --home-bg-mute: #f0f3f7;
+  --home-radius: 16px;
+  --home-radius-pill: 40px;
+  --home-radius-sm: 4px;
+  --home-nav-h: 120px;
+
+  background: var(--home-bg);
+  color: var(--home-text);
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  overflow-x: hidden;
+}
+
+/* 若 base.css 未含 reset，这三行保证首屏不贴边 */
+body.home-page { margin: 0; }
+.home-page img { display: block; max-width: 100%; }
+.home-page a { text-decoration: none; }
+
+/* ---------- 2. 加载遮罩 ---------- */
+.home-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--home-bg);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.home-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.home-loader__inner { text-align: center; }
+.home-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #e0e4e8;
+  border-top-color: var(--home-blue);
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  animation: home-spin 0.8s linear infinite;
+}
+@keyframes home-spin { to { transform: rotate(360deg); } }
+.home-loader__text {
+  font-size: 14px;
+  color: #5a6f86;
+  margin: 0 0 16px;
+}
+.home-progress {
+  width: 200px;
+  height: 3px;
+  background: #e0e4e8;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.home-progress__fill {
+  width: 0%;
+  height: 100%;
+  background: var(--home-blue);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+.home-loader__label {
+  font-size: 13px;
+  color: var(--home-text-mute);
+  margin-top: 8px;
+}
+
+/* ---------- 3. 首屏封面 ---------- */
+.home-cover {
+  display: flex;
+  min-height: calc(100vh - var(--home-nav-h));
+  min-height: calc(100dvh - var(--home-nav-h));
+  background: #ffffff;
+}
+.home-cover__text {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+.home-cover__inner {
+  width: 100%;
+  max-width: 540px;
+  padding: 0 20px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.home-cover__text.is-shifted .home-cover__inner {
+  transform: translateY(-16px);
+}
+.home-tag {
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--home-blue);
+  border-left: 3px solid var(--home-blue);
+  padding-left: 16px;
+  margin-bottom: 24px;
+}
+.home-cover__inner h1 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  color: var(--home-text-strong);
+  margin: 0 0 24px;
+}
+.home-sub {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--home-text-soft);
+  margin: 0 0 32px;
+}
+.home-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 48px;
+  font-size: 14px;
+  color: #5a6f86;
+}
+.home-meta__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-meta__label {
+  color: var(--home-text-mute);
+  font-weight: 450;
+}
+.home-cover__media {
+  flex: 1 1 50%;
+  background: var(--home-bg-mute);
+  overflow: hidden;
+}
+.home-cover__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- 4. 图文交替介绍区 ---------- */
+.home-feature {
+  display: flex;
+  min-height: 50vh;
+  background: #ffffff;
+  border-top: 1px solid var(--home-line);
+}
+.home-feature--reverse { flex-direction: row-reverse; }
+
+/* 图片：抬高层级，盖住侵入的数字 */
+.home-feature__media {
+  flex: 0 0 33.333%;
+  overflow: hidden;
+  background: var(--home-bg-mute);
+  position: relative;
+  z-index: 2;
+}
+.home-feature__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 文字栏：作为数字的定位参照 */
+.home-feature__text {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* 大数字：上下占满、垂直居中、向图片侧侵入 */
+.home-feature__num {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -72px;                       /* 侵入图片 32px，可调 */
+  display: flex;
+  align-items: center;               /* 数字在整栏高度内居中 */
+  font-size: clamp(160px, 32vh, 320px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(74, 124, 247, 0.10);   /* 淡蓝，不抢正文 */
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+/* 图片在右时，数字改从右侧侵入 */
+.home-feature--reverse .home-feature__num {
+  left: auto;
+  right: -32px;
+}
+
+/* 正文：压在数字之上 */
+.home-feature__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  padding: 0 20px;
+}
+.home-feature__inner h2 {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--home-text-strong);
+  margin: 0 0 16px;
+}
+.home-feature__inner p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #3d5268;
+  margin: 0;
+}
+
+/* ---------- 5. 下载区 ---------- */
+.home-download {
+  background: #ffffff;
+  border-top: 1px solid var(--home-line);
+  padding: 100px 40px;
+}
+.home-download__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.home-download__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.home-badge {
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--home-blue);
+  background: var(--home-blue-soft);
+  padding: 4px 16px;
+  border-radius: 30px;
+  margin-bottom: 12px;
+}
+.home-download__header h2 {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--home-text-strong);
+  margin: 0 0 10px;
+}
+.home-download__sub {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--home-text-soft);
+  margin: 0;
+}
+.home-download__card {
+  background: #f8fafc;
+  border: 1px solid var(--home-line);
+  border-radius: var(--home-radius);
+  padding: 28px 32px;
+  text-align: center;
+  transition: box-shadow 0.2s ease;
+}
+.home-download__card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+.home-download__card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--home-text-strong);
+  margin: 0 0 4px;
+}
+.home-version {
+  font-size: 15px;
+  color: var(--home-text-soft);
+  margin: 0 0 16px;
+}
+.home-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.home-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: var(--home-radius-pill);
+  font-size: 15px;
+  font-weight: 500;
+  background: var(--home-blue);
+  color: #ffffff;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.home-btn:hover {
+  background: var(--home-blue-dark);
+  transform: translateY(-1px);
+}
+.home-btn--secondary {
+  background: #eef2f7;
+  color: #1a2f4a;
+}
+.home-btn--secondary:hover {
+  background: #dce2ea;
+  transform: translateY(-1px);
+}
+.home-btn--secondary:active {
+  transform: translateY(1px);
+  transition-duration: 0.1s;
+}
+.home-btn:active {
+  transform: translateY(1px);
+  transition-duration: 0.1s;   /* 按下要快，回弹要慢 */
+}
+.home-credit {
+  font-size: 14px;
+  color: #7a8fa0;
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--home-line);
+}
+.home-rules {
+  list-style: none;
+  margin: 24px auto 0;
+  padding: 0;
+  max-width: 760px;
+  text-align: left;
+}
+.home-rules li {
+  padding: 8px 0 8px 28px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #2c3e50;
+  border-bottom: 1px solid var(--home-line-soft);
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%234a7cf7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>') left center no-repeat;
+  background-size: 18px;
+  background-position: 0 9px;
+}
+.home-rules li:last-child { border-bottom: none; }
+
+/* ---------- 6. 上浮淡入 ---------- */
+@keyframes home-fade-up {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.home-animate-up {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.home-animate-up.is-visible {
+  animation: home-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.home-animate-up[data-delay="1"].is-visible { animation-delay: 0.15s; }
+.home-animate-up[data-delay="2"].is-visible { animation-delay: 0.30s; }
+.home-animate-up[data-delay="3"].is-visible { animation-delay: 0.45s; }
+.home-animate-up[data-delay="4"].is-visible { animation-delay: 0.60s; }
+
+/* ---------- 7. 响应式 ---------- */
+/* ---------- 7. 响应式 ---------- */
+@media (max-width: 768px) {
+  .home-page { --home-nav-h: 60px; }
+
+  /* ----- loader ----- */
+  .home-loader__inner { transform: scale(0.9); }
+
+  /* ----- 封面 ----- */
+  .home-cover {
+    flex-direction: column;
+    min-height: calc(100vh - var(--home-nav-h));
+    min-height: calc(100dvh - var(--home-nav-h));
+  }
+  .home-cover__text {
+    order: 1;
+    flex: 0 0 auto;
+    padding: 48px 24px 32px;
+  }
+  .home-cover__inner { padding: 0 10px; }
+  .home-cover__inner h1 { font-size: 34px; }
+  .home-sub { font-size: 16px; }
+  .home-cover__media {
+    order: 2;
+    flex: 1 1 auto;
+    min-height: 200px;
+    background: transparent;
+  }
+  .home-cover__media img { height: auto; }
+  .home-cover__text.is-shifted .home-cover__inner { transform: translateY(-8px); }
+
+  /* ----- 图文交替介绍区 ----- */
+  .home-feature {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .home-feature--reverse { flex-direction: column; }
+
+  .home-feature__text {
+    order: 1;
+    flex-direction: column;
+    align-items: stretch;          /* 改为 stretch，数字与正文同宽同起点 */
+    justify-content: flex-start;
+    padding: 28px 20px 16px;
+  }
+
+  .home-feature__inner {
+    padding: 0;                    /* 去掉多余的 10px，统一由外层提供缩进 */
+  }
+  .home-feature__inner h2 { font-size: 24px; }
+  .home-feature__inner p { font-size: 15px; }
+
+  .home-feature__media {
+    order: 2;
+    flex: 0 0 auto;
+    width: 100%;
+    background: transparent;
+  }
+  .home-feature__media img { height: auto; }
+
+  /* 大数字退回普通编号：静态流、小字号、与标题左对齐 */
+  .home-feature__num {
+    position: static;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--home-blue);
+    margin: 0 0 10px;
+    z-index: auto;
+  }
+
+  /* 大数字退回普通编号：静态流、小字号、蓝色 */
+  .home-feature__num {
+    position: static;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--home-blue);
+    margin-bottom: 10px;
+    z-index: auto;
+  }
+
+  /* ----- 下载区 ----- */
+  .home-download { padding: 60px 20px 64px; }
+  .home-download__header h2 { font-size: 26px; }
+  .home-download__card { padding: 20px 18px; }
+  .home-links { flex-direction: column; align-items: stretch; }
+  .home-btn { width: 100%; text-align: center; }
+}

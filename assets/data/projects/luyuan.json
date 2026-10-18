@@ -1,0 +1,58 @@
+{
+  "id": "luyuan",
+  "title": "麓原",
+  "tag": "OMSI 2 · 架空地图",
+  "subtitleLines": [
+    "山岳、海岸、城市",
+    "梦境中的城市。"
+  ],
+  "cover": "/assets/img/projects/luyuan/cover.png",
+  "meta": [
+    { "label": "作者", "value": "680路 / koWel_22" },
+    { "label": "版本", "value": "0.3.6" },
+    { "label": "更新", "value": "2026.08.17" }
+  ],
+  "sections": [
+    {
+      "number": "01",
+      "title": "线网规模",
+      "text": "历时8个月，我们制作出了200+地块的地图。地图中3家公司共运营24条线路，100+个车站。我们将会继续扩张。",
+      "image": "/assets/img/projects/luyuan/network.png"
+    },
+    {
+      "number": "02",
+      "title": "山麓",
+      "text": "在麓原北部的群山中，公路蜿蜒其间。其他地区也有丘陵分布。",
+      "image": "/assets/img/projects/luyuan/mountain.png"
+    },
+    {
+      "number": "03",
+      "title": "城镇",
+      "text": "您可驾车行于麓原地图中多个城镇之间。",
+      "image": "/assets/img/projects/luyuan/downtown.png"
+    },
+    {
+      "number": "04",
+      "title": "公交优先",
+      "text": "在金庄与北麓之间，依靠公交优先信号，可以实现全程不停车行驶。",
+      "image": "/assets/img/projects/luyuan/priority.png"
+    }
+  ],
+  "download": {
+    "badge": "下载",
+    "title": "获取麓原地图",
+    "subtitleLines": ["开启您的麓原之旅。", "欢迎反馈！"],
+    "name": "地图本体",
+    "version": "最新版本 0.3.6 · 2026.08.17",
+    "links": [
+      { "label": "百度网盘", "url": "#", "variant": "primary" },
+      { "label": "Github", "url": "#", "variant": "primary" }
+    ],
+    "credit": "地图作者：680路 / koWel_22",
+    "notes": [
+      "请确保已安装所有前置插件，否则可能出现景物缺失或蓝天白云。",
+      "建议在打开地图前使用 Bluesky 或 OMSI Map Tool 检查有无缺失文件。",
+      "如遇疑问，可在导航栏「帮助」中寻找答案。"
+    ]
+  }
+}
