@@ -38,21 +38,16 @@
       "image": "/assets/img/projects/luyuan/priority.png"
     }
   ],
-  "download": {
+    "download": {
     "badge": "下载",
     "title": "获取麓原地图",
     "subtitleLines": ["开启您的麓原之旅。", "欢迎反馈！"],
     "name": "地图本体",
-    "version": "最新版本 0.3.6 · 2026.08.17",
-    "links": [
-      { "label": "百度网盘", "url": "#", "variant": "primary" },
-      { "label": "Github", "url": "#", "variant": "primary" }
-    ],
     "credit": "地图作者：680路 / koWel_22",
     "notes": [
       "请确保已安装所有前置插件，否则可能出现景物缺失或蓝天白云。",
       "建议在打开地图前使用 Bluesky 或 OMSI Map Tool 检查有无缺失文件。",
-      "如遇疑问，可在导航栏「帮助」中寻找答案。"
+      "如遇疑问，可在导航栏「更多 - 帮助中心」中寻找答案。"
     ]
   }
 }

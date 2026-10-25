@@ -1,0 +1,40 @@
+[
+  {
+    "version": "0.3.6",
+    "date": "2026-08-17",
+    "type": "Release",
+    "changelog": [
+      "发布了一个版本"
+    ],
+    "links": [
+      { "label": "百度网盘", "url": "https://pan.baidu.com/s/1aQhCQeo7O85SBJWw3MF08w?pwd=preN " },
+      { "label": "Github", "url": "#" }
+    ]
+  },
+  {
+    "version": "0.3.14",
+    "date": "2026-10-24",
+    "type": "Beta",
+    "changelog": [
+      "新燕子村及河堤路北段布景"
+    ],
+    "links": [
+      { "label": "百度网盘", "url": "#" },
+      { "label": "Github", "url": "#" }
+    ]
+  },
+  {
+    "version": "0.3.15",
+    "date": "2026-10-25",
+    "type": "Beta",
+    "changelog": [
+      "河堤路南段布景",
+      "增设燕北路三站的站牌",
+      "抢走了御坂75900号的卤肉饭"
+    ],
+    "links": [
+      { "label": "百度网盘", "url": "#" },
+      { "label": "Github", "url": "https://github.com/koWelK/kowelk.github.io/releases/download/Beta/0.3.15.0.4.0.zip" }
+    ]
+  }
+]

@@ -1,0 +1,192 @@
+/* ============================================================
+   versions.css — 历史版本卡片样式
+   ============================================================ */
+
+.versions-page {
+  --v-blue: #4a7cf7;
+  --v-blue-soft: #eef4ff;
+  --v-text: #1e2a36;
+  --v-text-strong: #0f1a26;
+  --v-text-soft: #4a5c6e;
+  --v-text-mute: #8a9cb0;
+  --v-line: #eef2f6;
+  --v-bg: #f6f8fa;
+
+  background: var(--v-bg);
+  color: var(--v-text);
+}
+
+.versions-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 24px 80px; /* 顶部避开悬浮导航栏 */
+}
+
+.versions-header {
+  margin-bottom: 40px;
+}
+.versions-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--v-text-strong);
+  margin: 0 0 8px;
+}
+.versions-header p {
+  font-size: 15px;
+  color: var(--v-text-soft);
+  margin: 0 0 16px;
+}
+.back-link {
+  font-size: 14px;
+  color: var(--v-blue);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+.back-link:hover {
+  border-bottom-color: var(--v-blue);
+}
+
+/* 卡片列表 */
+.version-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 单张卡片 */
+.version-card {
+  background: #ffffff;
+  border: 1px solid var(--v-line);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.version-card:hover {
+  border-color: #dce2ea;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+/* 卡片头部：版本号、类型、日期 */
+.v-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--v-line);
+}
+
+.v-version {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--v-text-strong);
+  margin: 0;
+}
+
+/* 标签 */
+.v-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.v-tag--release {
+  background: var(--v-blue-soft);
+  color: var(--v-blue);
+}
+.v-tag--beta {
+  background: #fff7ed;
+  color: #ea580c;
+}
+.v-tag--alpha {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.v-date {
+  font-size: 14px;
+  color: var(--v-text-mute);
+  margin-left: auto;
+}
+
+/* 更新日志 */
+.v-changelog {
+  margin: 0 0 20px;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--v-text-soft);
+}
+.v-changelog li {
+  margin-bottom: 4px;
+}
+.v-changelog li::marker {
+  color: #cbd5e1;
+}
+
+/* 下载链接区 */
+.v-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.v-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--v-bg);
+  color: var(--v-text-strong);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.v-btn:hover {
+  background: var(--v-blue);
+  color: #fff;
+}
+
+/* ============================================================
+   筛选标签区
+   ============================================================ */
+.version-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 14px;
+  color: var(--v-text-soft);
+  font-weight: 500;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #ffffff;
+  border: 1px solid var(--v-line);
+  border-radius: 20px;
+  color: var(--v-text-mute);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-btn:hover {
+  background: var(--v-bg);
+  color: var(--v-text-soft);
+}
+
+/* 选中状态 */
+.filter-btn.is-active {
+  background: var(--v-blue-soft);
+  border-color: var(--v-blue);
+  color: var(--v-blue);
+}

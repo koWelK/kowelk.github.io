@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史版本 · 麓原</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/versions.css">
+</head>
+<body class="versions-page">
+
+  <div id="site-header"></div>
+
+  <main class="versions-main">
+    <!-- 新增：筛选标签 -->
+    <div class="version-filters" id="version-filters">
+      <span class="filter-label">显示类型：</span>
+      <button class="filter-btn is-active" data-type="Release">Release</button>
+      <button class="filter-btn is-active" data-type="Beta">Beta</button>
+      <button class="filter-btn is-active" data-type="Alpha">Alpha</button>
+    </div>
+
+    <div class="versions-header">
+      <h1>麓原 · 历史版本</h1>
+      <p>最上方的 Release 版本为当前最新正式版。非正式版可能只提供Github下载渠道。</p>
+      <a href="/" class="back-link">← 返回首页</a>
+    </div>
+
+    <!-- 版本卡片列表容器 -->
+    <div id="version-list" class="version-list">
+      <div class="loading-tip">正在加载版本列表...</div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/versions.js"></script>
+</body>
+</html>

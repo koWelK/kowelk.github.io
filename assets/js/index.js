@@ -1,18 +1,19 @@
 /* ============================================================
    index.js — 首页（麓原作品介绍）
-   职责：加载 luyuan.json → 渲染封面/介绍区/下载区 → 控制 loader 与滚动动画
+   职责：加载 luyuan.json 和 versions.json → 渲染页面 → 控制 loader 与动画
    数据：/assets/data/projects/luyuan.json
+         /assets/data/projects/versions.json
    ============================================================ */
 (function () {
   'use strict';
 
   const DATA_URL = '/assets/data/projects/luyuan.json';
+  const VERSIONS_URL = '/assets/data/projects/versions.json';
   const MIN_LOADER_MS = 600;   // loader 最短展示，避免闪一下
   const MAX_WAIT_MS = 4000;    // 图片/数据卡住时的兜底放行
 
   /* ---------- 工具 ---------- */
   async function loadJSON(url) {
-    // 如果 common.js 里已经定义了全局 loadJSON，可以直接借用，这里保留本地版以防万一
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`${url} 加载失败 (${res.status})`);
     return res.json();
@@ -43,7 +44,6 @@
     let value = 0;
 
     const timer = setInterval(() => {
-      // 最高模拟到 90%，剩下 10% 留给真实完成
       value = Math.min(90, value + Math.random() * 12);
       paint(value);
     }, 120);
@@ -100,7 +100,6 @@
       </div>
     `;
 
-    // 封面文字延迟上移（还原 productN.css 的 cover-shifted 效果）
     setTimeout(() => {
       const text = document.getElementById('home-cover-text');
       if (text) text.classList.add('is-shifted');
@@ -135,18 +134,32 @@
   }
 
   /* ---------- 渲染：下载区 ---------- */
-  function renderDownload(data) {
+  function renderDownload(d, latest) {
     const root = document.getElementById('home-download');
-    if (!root) return;
+    if (!root || !d) return;
 
-    const d = data.download;
-    if (!d) { root.remove(); return; }
+    // 如果找不到可用版本，只渲染常驻说明
+    if (!latest) {
+      root.innerHTML = `
+        <div class="home-download__inner home-animate-up" data-delay="4" id="index-download">
+          <div class="home-download__header">
+            <span class="home-badge">${escapeHtml(d.badge || '下载')}</span>
+            <h2>${escapeHtml(d.title || '下载')}</h2>
+            <p class="home-download__sub">${(d.subtitleLines || [d.subtitle || '']).map(escapeHtml).join('<br>')}</p>
+          </div>
+          <p style="text-align: center; color: #8a9cb0; margin: 40px 0;">暂无可用下载版本</p>
+        </div>
+      `;
+      return;
+    }
 
-    const links = (d.links || []).map(l => {
+    // 动态生成下载按钮
+    const links = (latest.links || []).map(l => {
       const variant = l.variant === 'secondary' ? ' home-btn--secondary' : '';
       return `<a class="home-btn${variant}" href="${escapeHtml(l.url || '#')}" rel="noopener">${escapeHtml(l.label || '下载')}</a>`;
     }).join('');
 
+    // 保留游玩须知
     const notes = Array.isArray(d.notes) && d.notes.length
       ? `<ul class="home-rules">${d.notes.map(n => `<li>${escapeHtml(n)}</li>`).join('')}</ul>`
       : '';
@@ -160,11 +173,17 @@
         </div>
         <div class="home-download__card">
           <h3>${escapeHtml(d.name || '地图本体')}</h3>
-          <p class="home-version">${escapeHtml(d.version || '')}</p>
+          <!-- 动态获取最新版本号与日期 -->
+          <p class="home-version">最新正式版 v${escapeHtml(latest.version)} · ${escapeHtml(latest.date)}</p>
           <div class="home-links">${links}</div>
           ${d.credit ? `<p class="home-credit">${escapeHtml(d.credit)}</p>` : ''}
         </div>
         ${notes}
+        
+        <!-- 历史版本跳转链接 -->
+        <div style="text-align:center; margin-top:24px;">
+          <a href="/tools/versions.html" style="font-size:14px; color:#8a9cb0; text-decoration:none; transition: color 0.3s;" onmouseover="this.style.color='#4a7cf7'" onmouseout="this.style.color='#8a9cb0'">查看历史版本 →</a>
+        </div>
       </div>
     `;
   }
@@ -188,28 +207,52 @@
   }
 
   /* ---------- 启动 ---------- */
-  // 监听 common.js 派发的 commonReady 事件，
-  // 确保此时 DOM 已解析、Header/Footer 已注入完毕。
+  /* ---------- 启动 ---------- */
   document.addEventListener('commonReady', async () => {
     const loader = createLoader();
     const started = Date.now();
 
     try {
-      // 此时 header/footer 已注入，不用再 mountComponents，也不用 syncNavHeight
-      const data = await loadJSON(DATA_URL);
+      // 1. 先单独加载 luyuan.json
+      let data;
+      try {
+        data = await loadJSON(DATA_URL);
+      } catch (e) {
+        throw new Error(`首页数据 luyuan.json 加载失败：${e.message}`);
+      }
 
+      // 2. 再单独加载 versions.json
+      let versions = [];
+      try {
+        versions = await loadJSON(VERSIONS_URL);
+      } catch (e) {
+        throw new Error(`版本数据 versions.json 加载失败：${e.message}`);
+      }
+
+      // 3. 渲染页面
       renderCover(data);
       renderFeatures(data);
-      renderDownload(data);
 
-      // 等首图（若存在），但不无限等
+      // 4. 找最新的 Release
+      let latestRelease = null;
+      if (Array.isArray(versions)) {
+        for (let i = versions.length - 1; i >= 0; i--) {
+          if (versions[i].type === 'Release') {
+            latestRelease = versions[i];
+            break;
+          }
+        }
+      }
+      
+      renderDownload(data.download, latestRelease);
+
+      // 5. 图片和收尾
       const coverReady = waitImage(data.cover);
       const timeout = new Promise(r => setTimeout(r, MAX_WAIT_MS));
       await Promise.race([coverReady, timeout]);
 
       document.title = `${data.title || '麓原'} · 麓原交通协会`;
 
-      // 保证 loader 至少展示 MIN_LOADER_MS
       const elapsed = Date.now() - started;
       if (elapsed < MIN_LOADER_MS) {
         await new Promise(r => setTimeout(r, MIN_LOADER_MS - elapsed));
@@ -219,13 +262,16 @@
       initReveal();
     } catch (err) {
       console.error(err);
-      loader.fail('加载失败');
+      // 把具体的错误信息显示在 Loader 上
+      loader.fail(err.message || '加载失败');
+      
       const main = document.getElementById('home-main');
       if (main) {
         main.innerHTML = `
-          <div style="padding:80px 24px;text-align:center;color:#5a6f86;font-size:15px;">
-            页面数据加载失败，请刷新重试。<br>
-            <span style="color:#8a9cb0;font-size:13px;">${escapeHtml(err.message || '')}</span>
+          <div style="padding:80px 24px;text-align:center;color:#dc2626;font-size:15px;">
+            <strong>页面数据加载失败</strong><br><br>
+            <span style="color:#5a6f86;font-size:14px;">${escapeHtml(err.message || '')}</span><br>
+            <span style="color:#8a9cb0;font-size:12px;margin-top:12px;display:inline-block;">请按 F12 查看控制台获取更多信息</span>
           </div>`;
       }
     }

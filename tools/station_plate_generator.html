@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMSI 站牌/线路牌生成器</title>
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/station_plate_generator.css">
+</head>
+<body>
+
+    <div id="font-warning">
+        <strong>字体缺失提示：</strong>
+        <span id="missing-fonts"></span>
+        未检测到。为了保证预览和导出效果，请在本机安装这些字体（阿里普惠体 55、Century Gothic、Bahnschrift）。
+    </div>
+
+    <div class="container">
+        <!-- 站名牌 -->
+        <div class="column">
+            <h2>站名牌生成 (500 × 150)</h2>
+
+            <div class="form-group">
+                <label>站名 (中文)</label>
+                <input type="text" id="s-zh" value="燕子村">
+            </div>
+
+            <div class="form-group">
+                <label>站名 (英文)</label>
+                <input type="text" id="s-en" value="Yanzicun">
+            </div>
+
+            <div class="form-group">
+                <label>三字码 (可选)</label>
+                <input type="text" id="s-code" value="YZC" maxlength="4">
+            </div>
+
+            <div class="form-group">
+                <label>三字码底色</label>
+                <select id="s-color">
+                    <option value="#0071BC">清澜色</option>
+                    <option value="#C1272D">智贤镇北麓色</option>
+                    <option value="#009245">青云蒲河色</option>
+                    <option value="#F7931E">寺坂山田色</option>
+                    <option value="#93278F">栀花色</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>三字码位置</label>
+                <select id="s-pos">
+                    <option value="pos-lb">左下角</option>
+                    <option value="pos-rb">右下角</option>
+                    <option value="pos-bottom">下方居中</option>
+                </select>
+            </div>
+
+            <div class="preview-area">
+                <div id="sign-board" class="sign-board pos-lb">
+                    <div class="sign-content">
+                        <div class="sign-zh" id="p-s-zh">燕子村</div>
+                        <div class="sign-en" id="p-s-en">Yanzicun</div>
+                        <div class="code-pill" id="p-s-code">YZC</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="export-btn" onclick="exportImage('sign-board')">
+                下载站名牌 PNG
+            </button>
+        </div>
+
+        <!-- 线路牌 -->
+        <div class="column">
+            <h2>线路牌生成 (500 × 100)</h2>
+
+            <div class="form-group">
+                <label>线路号</label>
+                <input type="text" id="r-num" value="167">
+            </div>
+
+            <div class="form-group">
+                <label>终点站 (中文)</label>
+                <input type="text" id="r-dest-zh" value="燕子村">
+            </div>
+
+            <div class="form-group">
+                <label>终点站 (英文)</label>
+                <input type="text" id="r-dest-en" value="Yanzicun">
+            </div>
+
+            <div class="form-group">
+                <label>线路描述 (中文)</label>
+                <input type="text" id="r-desc-zh" value="北麓环岛经由">
+            </div>
+
+            <div class="form-group">
+                <label>线路描述 (英文)</label>
+                <input type="text" id="r-desc-en" value="via Nsp. Roundabout">
+            </div>
+
+            <div class="preview-area">
+                <div id="route-board" class="route-board">
+                    <div class="route-num" id="p-r-num">167</div>
+
+                    <div class="route-text-area">
+                        <div class="route-zh" id="p-r-zh">
+                            <span class="desc-zh" id="p-r-desc-zh">北麓环岛经由</span>
+                            <span class="dest-zh" id="p-r-dest-zh">燕子村</span>
+                        </div>
+                        <div class="route-en" id="p-r-en">via Nsp. Roundabout, Yanzicun</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="export-btn" onclick="exportImage('route-board')">
+                下载线路牌 PNG
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/station_plate_generator.js"></script>
+</body>
+</html>

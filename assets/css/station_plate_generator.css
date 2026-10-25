@@ -1,0 +1,294 @@
+/* =========================================================
+   OMSI 站牌/线路牌生成器
+   完整样式文件
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&family=Century+Gothic&display=swap');
+
+/* -------------------------
+   页面基础
+   ------------------------- */
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-color: #222;
+    color: #eee;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.column {
+    background: #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 540px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 20px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+}
+
+/* -------------------------
+   表单
+   ------------------------- */
+
+.form-group {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 120px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+.form-group input[type="text"] {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #555;
+    background: #222;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.form-group select {
+    flex: 1;
+    padding: 6px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.preview-area {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* -------------------------
+   站名牌 500 × 150
+   ------------------------- */
+
+.sign-board {
+    width: 500px;
+    height: 150px;
+    background-color: #ffffff;
+    border: 4px solid #000000;
+    box-sizing: border-box;
+    position: relative;
+    color: #000;
+    overflow: hidden;
+}
+
+.sign-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.sign-zh {
+    font-family: '阿里巴巴普惠体 3.0', 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    font-size: 52px;
+    line-height: 1.1;
+}
+
+.sign-en {
+    font-family: 'Century Gothic', 'Century Gothic Paneuropean', sans-serif;
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+.code-pill {
+    background-color: #0071BC; /* 默认清澜色 */
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-family: 'Bahnschrift', 'DIN Alternate', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+}
+
+/* A/B 模式：绝对定位 */
+.sign-board.pos-lb .code-pill {
+    position: absolute;
+    left: 16px;
+    bottom: 22px;
+}
+
+.sign-board.pos-rb .code-pill {
+    position: absolute;
+    right: 16px;
+    bottom: 22px;
+}
+
+/* C 模式：取消绝对定位，回归文档流 */
+.sign-board.pos-bottom .sign-zh {
+    font-size: 48px;
+}
+
+.sign-board.pos-bottom .sign-en {
+    font-size: 24px;
+}
+
+.sign-board.pos-bottom .sign-content {
+    justify-content: flex-start;
+    padding-top: 14px;
+}
+
+.sign-board.pos-bottom .code-pill {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+}
+
+/* -------------------------
+   线路牌 500 × 100
+   说明：
+   - 线路号使用固定宽度槽位，不再靠负字距和左右 padding 硬挤
+   - 文字区独立居中，并可通过 --text-nudge 单独左右微调
+   - 所有微调集中在 .route-board 的变量里
+   ------------------------- */
+
+.route-board {
+    /* === 关键微调变量：只改这里 === */
+    --num-slot: 132px;      /* 线路号占的固定宽度；4 位线路号建议改成 160px */
+    --num-pad-left: 22px;   /* 线路号越靠右，加大这个值 */
+    --num-drop: 3px;        /* 线路号垂直微调；原来 8px 偏下过头 */
+    --text-nudge: -6px;     /* 文字整体左移为负，右移为正 */
+
+    width: 500px;
+    height: 100px;
+    background-color: #ffffff;
+    border: 4px solid #000000;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    color: #000;
+    overflow: hidden;
+}
+
+.route-num {
+    flex: 0 0 var(--num-slot);
+    width: var(--num-slot);
+    box-sizing: border-box;
+    padding-left: var(--num-pad-left);
+    padding-right: 0;
+
+    font-family: 'Bahnschrift', 'DIN Alternate', sans-serif;
+    font-size: 88px;
+    font-weight: 300;          /* 对应 XML 中的 Bahnschrift Light */
+    line-height: 1;
+    letter-spacing: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+
+    position: relative;
+    top: var(--num-drop);
+}
+
+.route-text-area {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 0 10px 0 0;
+    position: relative;
+    left: var(--text-nudge);
+}
+
+.route-zh {
+    font-family: '阿里巴巴普惠体 3.0', 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.12;
+    white-space: nowrap;
+}
+
+.route-zh .dest-zh {
+    font-size: 40px;
+}
+
+.route-zh .desc-zh {
+    font-size: 32px;
+}
+
+.route-en {
+    font-family: 'Century Gothic', sans-serif;
+    font-size: 20px;
+    line-height: 1.1;
+    margin-top: 1px;
+    white-space: nowrap;
+}
+
+/* -------------------------
+   导出按钮 & 警告
+   ------------------------- */
+
+.export-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.export-btn:hover {
+    background-color: #45a049;
+}
+
+#font-warning {
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: none;
+    width: 100%;
+    max-width: 1100px;
+    box-sizing: border-box;
+}
